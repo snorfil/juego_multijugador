@@ -77,7 +77,7 @@ public class Partida extends Thread implements comunicacion {
         for (Jugador i : jugadores) {
             i.write("" + resultado);
         }
-        System.out.println("" + resultado+"\n");
+        System.out.println("" + resultado);
 
     }
 

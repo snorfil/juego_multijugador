@@ -31,7 +31,9 @@ public class Jugador extends Thread {
     @Override
     public void run() {
         try {
-            out.println("\n");
+            out.println("");
+            out.println("");
+
             while (true)
             {
                 System.out.println("____DEBUG____ Partidas.Jugador :"+ jugador + " empezando recepccion de eventos de cliente");
@@ -48,7 +50,7 @@ public class Jugador extends Thread {
 
     public void write(String resultado)
     {
-        out.println(resultado);
+        out.println(""+resultado);
         System.out.println("enviando al jugador el indicador");
     }
 }
