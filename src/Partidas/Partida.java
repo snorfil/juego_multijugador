@@ -1,3 +1,5 @@
+package Partidas;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -8,7 +10,7 @@ import java.util.ArrayList;
 
 public class Partida extends Thread implements comunicacion {
 
-    final int puerto ;
+    final int puerto;
     private boolean enable = true;
 
     ArrayList<PrintWriter> out;
@@ -16,12 +18,15 @@ public class Partida extends Thread implements comunicacion {
     private Partida partida = this;
     int resultado = 0;
     private ServerSocket serverSocket;
+    private int num_partida;
 
-    public Partida(ArrayList<PrintWriter> salidas,int port) {
+    public Partida(ArrayList<PrintWriter> salidas, int port, final int num) {
+        num_partida = num;
         puerto = port;
         out = salidas;
         jugadores = new ArrayList<>();
         partida.start();
+        System.out.println("Partida " + num_partida);
     }
 
     @Override
@@ -30,7 +35,7 @@ public class Partida extends Thread implements comunicacion {
         try {
             serverSocket = new ServerSocket(puerto);
             System.out.println("enviando puerto a los clientes");
-            for (PrintWriter i:out) {
+            for (PrintWriter i : out) {
                 i.println(puerto);
                 i.close();
             }
@@ -41,14 +46,14 @@ public class Partida extends Thread implements comunicacion {
                 System.out.println("___Partida___ Aceptado jugador a partida....");
 
                 BufferedReader reader = new BufferedReader(new InputStreamReader(sk.getInputStream()));
-                PrintWriter writer = new PrintWriter(sk.getOutputStream(),true);
-                jugadores.add(new Jugador(writer,reader, partida, contador));
+                PrintWriter writer = new PrintWriter(sk.getOutputStream(), true);
+                jugadores.add(new Jugador(writer, reader, partida, contador));
 
                 contador++;
 
                 if (jugadores.size() == 2) {
                     System.out.println("___Partida___ iniciando juego!!!!!");
-                    for (Jugador i:jugadores) {
+                    for (Jugador i : jugadores) {
                         i.start();
 
                     }
@@ -57,10 +62,7 @@ public class Partida extends Thread implements comunicacion {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
     }
-
 
 
     @Override
@@ -71,22 +73,21 @@ public class Partida extends Thread implements comunicacion {
         } else {
             resultado++;
         }
-        for (Jugador i:jugadores)
-        {
-            i.write(resultado);
+
+        for (Jugador i : jugadores) {
+            i.write("" + resultado);
         }
-        System.out.println("" + resultado);
+        System.out.println("" + resultado+"\n");
 
     }
 
     @Override
     public void destruir() {
 
-        if (enable)
-        {
+        if (enable) {
             System.out.println("Destruyendo partida");
             enable = false;
-            for (Jugador i:jugadores) {
+            for (Jugador i : jugadores) {
                 i.destroy();
                 i.interrupt();
             }

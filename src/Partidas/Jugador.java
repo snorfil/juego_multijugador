@@ -1,3 +1,5 @@
+package Partidas;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -9,14 +11,12 @@ public class Jugador extends Thread {
     private comunicacion inter;
     private int jugador ;
 
-
-    public Jugador(PrintWriter writer , BufferedReader reader,comunicacion comunication, int player) throws IOException
+    public Jugador(PrintWriter writer , BufferedReader reader, comunicacion comunication, int player) throws IOException
     {
         inter       = comunication;
         out         = writer;
         in          = reader;
         jugador     = player;
-
     }
     public void destroy()
     {
@@ -34,9 +34,9 @@ public class Jugador extends Thread {
             out.println("\n");
             while (true)
             {
-                System.out.println("____DEBUG____ Jugador :"+ jugador + " empezando recepccion de eventos de cliente");
+                System.out.println("____DEBUG____ Partidas.Jugador :"+ jugador + " empezando recepccion de eventos de cliente");
                 in.readLine();
-                System.out.println("____DEBUG____ Jugador :"+ jugador + " recibido");
+                System.out.println("____DEBUG____ Partidas.Jugador :"+ jugador + " recibido");
                 inter.broadcast(jugador);
             }
         } catch (IOException e) {
@@ -46,7 +46,9 @@ public class Jugador extends Thread {
             }
     }
 
-    public void write(int resultado) {
+    public void write(String resultado)
+    {
         out.println(resultado);
+        System.out.println("enviando al jugador el indicador");
     }
 }

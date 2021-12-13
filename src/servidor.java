@@ -1,15 +1,19 @@
+import Partidas.Partida;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class servidor extends Thread{
     private ServerSocket serverSocket;
     private Socket clientSocket;
     ArrayList<BufferedReader> entradas;
     ArrayList<PrintWriter> salidas;
+    int contador = 0;
     Partida partidas;
 
     public servidor() throws IOException {
@@ -27,6 +31,7 @@ public class servidor extends Thread{
     @Override
     public void run() {
         super.run();
+
         while (true)
         {
             try {
@@ -46,12 +51,17 @@ public class servidor extends Thread{
                 if (salidas.size() == 2)
                 {
                     System.out.println("____debug____Servidor : creando partida con " + salidas.size() + " jugadores");
-                    new Partida(salidas,500);
+                    Random r = new Random();
+                    int port = r.nextInt(10000);
+
+                    new Partida(salidas,port,contador);
+                    contador++;
+                    salidas = new ArrayList<>();
                 }
 
 //                if (entradas.size() == 2)
 //                {
-//                    partidas = new Partida(salidas);
+//                    partidas = new Partidas.Partida(salidas);
 //
 //
 //                    entradas.clear();
