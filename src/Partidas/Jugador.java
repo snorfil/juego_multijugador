@@ -11,6 +11,7 @@ public class Jugador extends Thread {
     private comunicacion inter;
     private int jugador ;
 
+
     public Jugador(PrintWriter writer , BufferedReader reader, comunicacion comunication, int player) throws IOException
     {
         inter       = comunication;
@@ -28,18 +29,30 @@ public class Jugador extends Thread {
         }
     }
 
+
+
     @Override
     public void run() {
         try {
-            out.println("");
-            out.println("");
+            // secuencia de incio de partida 3,2,1
+            out.println("ready");
+            out.println("3");
+            out.println("2");
+            out.println("1");
+            out.println("GO!!!!");
+
 
             while (true)
             {
-                System.out.println("____DEBUG____ Partidas.Jugador :"+ jugador + " empezando recepccion de eventos de cliente");
+                System.out.println("_____Jugador_____ :"+ jugador + " empezando recepccion de eventos de cliente");
                 in.readLine();
-                System.out.println("____DEBUG____ Partidas.Jugador :"+ jugador + " recibido");
-                inter.broadcast(jugador);
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        inter.broadcast(jugador);
+                    }
+                }).start();
+
             }
         } catch (IOException e) {
             e.printStackTrace();

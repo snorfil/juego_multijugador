@@ -56,7 +56,6 @@ public class servidor extends Thread{
 
                     new Partida(salidas,port,contador);
                     contador++;
-                    salidas = new ArrayList<>();
                 }
 
 //                if (entradas.size() == 2)

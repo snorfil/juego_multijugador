@@ -11,15 +11,15 @@ public class Cliente_pruebas extends Thread {
     BufferedReader reader;
 
 
-    Runnable lector = new Runnable() {
+    Runnable receptor_pantalla = new Runnable() {
         @Override
         public void run() {
-            String msg = "";
+            String msg ;
             while (true)
             {
                 try {
+                    System.out.println("_____Cliente______ entrando en lectura para pantalla");
                    msg =  reader.readLine();
-                   System.out.println("llego el broadcast");
                    System.out.println(msg);
 
                 } catch (IOException e) {
@@ -28,6 +28,17 @@ public class Cliente_pruebas extends Thread {
             }
         }
     };
+
+    Runnable envio_evento = new Runnable() {
+        @Override
+        public void run() {
+            System.out.println("____________Cliente___________saliendo del sleep");
+            writer.println("\n");
+        }
+    };
+
+
+
 
 
 
@@ -58,11 +69,9 @@ public class Cliente_pruebas extends Thread {
             reader = new BufferedReader(new InputStreamReader(sk.getInputStream()));
             writer = new PrintWriter(new PrintStream(sk.getOutputStream()));
 
-            reader.readLine();
             System.out.println("Cliente________"+ this.getName() + " Comienza la partida!!!!!!");
 
-
-            new Thread(lector).start();
+            new Thread(receptor_pantalla).start();
 
             while (true)
             {
@@ -70,13 +79,12 @@ public class Cliente_pruebas extends Thread {
                  * cada toque debera ejecutar este codigo de escribir
                  * sera el botón.................
                  */
-                Thread.currentThread().sleep(1000);
-                System.out.println("saliendo del sleep");
-                writer.println("\n");
+                sleep(1000);
+
+                new Thread(envio_evento).start();
+
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
+        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
 
