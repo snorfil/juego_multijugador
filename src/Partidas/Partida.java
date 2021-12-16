@@ -75,7 +75,18 @@ public class Partida extends Thread implements comunicacion {
                     for (Jugador i : jugadores) {
                         i.start();
                     }
+                    for (PrintWriter i : out) {
+                        i.write("ready");
+                        i.write("3");
+                        i.write("2");
+                        i.write("1");
+                        i.write("GO!!!!");
+                    }
+                    break;
                 }
+                // secuencia de incio de partida 3,2,1
+
+
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -93,7 +104,7 @@ public class Partida extends Thread implements comunicacion {
                     resultado++;
                 }
 
-                for (Jugador i : jugadores) {
+                for (PrintWriter i : out) {
                     i.write("" + resultado);
                 }
                 System.out.println("" + resultado);

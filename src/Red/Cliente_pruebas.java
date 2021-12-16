@@ -33,7 +33,7 @@ public class Cliente_pruebas extends Thread {
         @Override
         public void run() {
             System.out.println("____________Cliente___________saliendo del sleep");
-            writer.println("\n");
+            writer.write("\n");
         }
     };
 
@@ -61,6 +61,7 @@ public class Cliente_pruebas extends Thread {
 
             reader.close();
             writer.close();
+
             int puerto = Integer.parseInt(dato);
 
             sk = new Socket("localhost",puerto);
