@@ -35,11 +35,11 @@ public class servidor extends Thread{
         while (true)
         {
             try {
-                System.out.println("____debug____Servidor : Accept()");
+                System.out.println("____Servidor : Accept()");
 
                 clientSocket = serverSocket.accept();
 
-                System.out.println("____debug____Servidor : añadiendo jugador.....");
+                System.out.println("____Servidor : añadiendo jugador.....");
                 PrintWriter out;
                 BufferedReader in;
 

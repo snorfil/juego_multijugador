@@ -21,9 +21,7 @@ public class main {
 
                 new Cliente_pruebas();
                 System.out.println("Acabas de crear un cliente");
-
             }
-
         }
     };
     // _________________________________________________________

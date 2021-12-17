@@ -32,18 +32,18 @@ public class Partida extends Thread implements comunicacion {
 
     private ArrayList<PrintWriter> out;
     private ArrayList<Jugador> jugadores;
-    private Partida partida = this;
+    private final comunicacion partida = this;
     int resultado = 0;
     private ServerSocket serverSocket;
     private int num_partida;
 
 
-    public Partida(ArrayList<PrintWriter> salidas, int port, final int num) {
+    public Partida(ArrayList<PrintWriter> salidas, int port, int num) {
         num_partida = num;
         puerto = port;
         out = salidas;
         jugadores = new ArrayList<>();
-        partida.start();
+        this.start();
         System.out.println("Partida " + num_partida);
     }
 
@@ -56,6 +56,7 @@ public class Partida extends Thread implements comunicacion {
             System.out.println("enviando puerto a los clientes");
 
             int contador = 1;
+
             // Reconexion de los jugadores a la partida
             new Thread(msg_newServer).start();
 
@@ -75,6 +76,7 @@ public class Partida extends Thread implements comunicacion {
                     for (Jugador i : jugadores) {
                         i.start();
                     }
+
                     for (PrintWriter i : out) {
                         i.write("ready");
                         i.write("3");

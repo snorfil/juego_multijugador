@@ -7,7 +7,7 @@ public class Cliente_pruebas extends Thread {
 
     Socket sk ;
     PrintWriter writer;
-    String dato;
+    String msg;
     BufferedReader reader;
 
 
@@ -33,7 +33,7 @@ public class Cliente_pruebas extends Thread {
         @Override
         public void run() {
             System.out.println("____________Cliente___________saliendo del sleep");
-            writer.write("\n");
+            writer.write("");
         }
     };
 
@@ -57,12 +57,12 @@ public class Cliente_pruebas extends Thread {
             writer = new PrintWriter(new PrintStream(sk.getOutputStream()));
             reader = new BufferedReader(new InputStreamReader(sk.getInputStream()));
             System.out.println("Conectando a la partida.....");
-            dato = reader.readLine();
+            msg = reader.readLine();
 
             reader.close();
             writer.close();
 
-            int puerto = Integer.parseInt(dato);
+            int puerto = Integer.parseInt(msg);
 
             sk = new Socket("localhost",puerto);
             System.out.println("Cliente________ esperando a iniciar partida");
